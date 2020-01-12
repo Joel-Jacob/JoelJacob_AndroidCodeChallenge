@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), RedditAdapter.RedditDelgate {
 
     val compositeDisposable = CompositeDisposable()
-    lateinit var viewModel : RedditViewModel
+    lateinit var viewModel: RedditViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +38,15 @@ class MainActivity : AppCompatActivity(), RedditAdapter.RedditDelgate {
 
     }
 
-    private fun getRedditPosts(subreddit : String){
+    private fun getRedditPosts(subreddit: String) {
+
         compositeDisposable.add(
-            viewModel.getRedditPosts(subreddit).subscribe{redditPost->
-                setRV(redditPost.data.children)
-            }
-        )
+            viewModel.getRedditPosts(subreddit).subscribe( { redditPost ->
+                    setRV(redditPost.data.children)
+            },{
+                Toast.makeText(this, "That is not a valid search", Toast.LENGTH_SHORT).show()
+                Log.d("TAG_X", "Throwable: " + it)
+            }))
     }
 
     private fun setRV(posts:List<Child>){
