@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), RedditAdapter.RedditDelgate {
 
         viewModel = ViewModelProviders.of(this).get(RedditViewModel::class.java)
         getRedditPosts("funny")
+        search_view.setQuery("funny", false)
 
         val decorator = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
         recycler_view.addItemDecoration(decorator)
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity(), RedditAdapter.RedditDelgate {
     }
 
     override fun postItem(title: String, username: String) {
-        var message = "Check out what " + username + " said on Reddit: \"" +title + "\""
+        val message = "Check out what " + username + " said on Reddit: \"" +title + "\""
 
         Log.d("TAG_X", message)
 
